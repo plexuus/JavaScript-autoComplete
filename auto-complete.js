@@ -41,7 +41,12 @@ var autoComplete = (function(){
                 // escape special characters
                 search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
                 var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-                return '<div class="autocomplete-suggestion" data-val="' + item + '">' + item.replace(re, "<b>$1</b>") + '</div>';
+                var elem = document.createElement('div');
+                elem.classList.add('autocomplete-suggestion');
+                elem.innerHTML = item.replace(re, "<b>$1</b>");
+                elem.dataset.val = item;
+
+                return elem.outerHTML;
             },
             onSelect: function(e, term, item){}
         };
